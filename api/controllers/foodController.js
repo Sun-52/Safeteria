@@ -187,6 +187,8 @@ exports.decrease_foodamount_test = async (req, res) => {
   if (new_foodamount == 0) {
     try {
       console.log(user_food.indexOf(req.params.food_id), "splice index");
+      console.log(user_food[user_food.indexOf(req.params.food_id)]);
+      console.log(user_foodamount[user_food.indexOf(req.params.food_id)]);
       user_food.splice(user_food.indexOf(req.params.food_id));
       user_foodamount.splice(user_food.indexOf(req.params.food_id));
       user_order.food_list = user_food;
