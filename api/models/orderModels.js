@@ -31,7 +31,7 @@ const orderSchema = new Schema({
   status: {
     type: String,
   },
-  qr_code: {
+  que: {
     type: String,
   },
 });

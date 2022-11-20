@@ -65,6 +65,28 @@ exports.generate_qr = async (req, res) => {
   });
 };
 
+exports.gen_que = (req, res) => {
+  const random = Math.floor(Math.random() * 9000 + 1000);
+  order.findByIdAndUpdate(
+    req.params.order_id,
+    { que: random },
+    (err, order) => {
+      if (err) res.send(err);
+      res.json(order);
+    }
+  );
+};
+
+exports.get_que = (req, res) => {
+  mongoose
+    .findById(req.params.order_id)
+    .populate("food_list")
+    .exec((err, order) => {
+      if (err) res.send(err);
+      res.json(order);
+    });
+};
+
 exports.scan_qr = (req, res) => {
   order
     .findById(req.params.order_id)
