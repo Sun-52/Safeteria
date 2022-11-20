@@ -67,14 +67,16 @@ exports.generate_qr = async (req, res) => {
 
 exports.gen_que = async (req, res) => {
   const random = Math.floor(Math.random() * 9000 + 1000);
-  order.findByIdAndUpdate(
-    req.params.order_id,
-    { que: random },
-    (err, order) => {
-      if (err) res.send(err);
-      res.json(order);
-    }
-  );
+  const user_order = order.findById(req.params.order_id);
+  const user_que = user_order.que;
+  try {
+    user_que = random;
+    user_order.que = user_que;
+    await user_order.save();
+    res.json(user_order);
+  } catch (err) {
+    res.semd(err);
+  }
 };
 
 exports.get_que = (req, res) => {
