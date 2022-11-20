@@ -89,7 +89,7 @@ exports.get_que = (req, res) => {
 
 exports.scan_qr = (req, res) => {
   order
-    .findById(req.params.order_id)
+    .findOne({ que: req.params.que })
     .populate("food_list")
     .exec((err, order) => {
       if (err) res.send(err);
@@ -98,7 +98,7 @@ exports.scan_qr = (req, res) => {
 };
 
 exports.serve_order = async (req, res) => {
-  const sending_order = await order.findOne({ que: req.params.que });
+  const sending_order = await order.findById(req.params.order_id);
   // order.findByIdAndUpdate(
   //   req.params.order_id,
   //   { qr_code: "", status: "served" },
