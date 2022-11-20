@@ -65,16 +65,16 @@ exports.generate_qr = async (req, res) => {
   });
 };
 
-exports.gen_que = (req, res) => {
-  const random = Math.floor(Math.random() * 9000 + 1000);
-  order.findByIdAndUpdate(
-    req.params.order_id,
-    { que: random },
-    (err, order) => {
-      if (err) res.send(err);
-      res.json(order);
-    }
-  );
+exports.gen_que = async (req, res) => {
+  try {
+    const random = Math.floor(Math.random() * 9000 + 1000);
+    const user_order = await order.findById(req.params.order_id);
+    user_order.que = random;
+    await user_order.save();
+    res.json(user_order);
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 exports.get_que = (req, res) => {
