@@ -98,27 +98,22 @@ exports.scan_qr = (req, res) => {
 };
 
 exports.serve_order = async (req, res) => {
-  const sending_user = await user.findById(req.params.user_id);
-  const sending_order = await order.findById(req.params.order_id);
-  if (sending_user.role === "shop") {
-    // order.findByIdAndUpdate(
-    //   req.params.order_id,
-    //   { qr_code: "", status: "served" },
-    //   (err, order) => {
-    //     if (err) res.send(err);
-    //     res.json(order);
-    //   }
-    // );
-    try {
-      sending_order.qr_code = "";
-      sending_order.status = "served";
-      await sending_order.save();
-      res.json(sending_order);
-    } catch (err) {
-      res.send(err);
-    }
-  } else {
-    res.send("Don't have acess");
+  const sending_order = await order.findOne({ que: req.params.que });
+  // order.findByIdAndUpdate(
+  //   req.params.order_id,
+  //   { qr_code: "", status: "served" },
+  //   (err, order) => {
+  //     if (err) res.send(err);
+  //     res.json(order);
+  //   }
+  // );
+  try {
+    sending_order.que = "";
+    sending_order.status = "served";
+    await sending_order.save();
+    res.json(sending_order);
+  } catch (err) {
+    res.send(err);
   }
 };
 
