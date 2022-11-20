@@ -75,7 +75,7 @@ exports.gen_que = async (req, res) => {
     await user_order.save();
     res.json(user_order);
   } catch (err) {
-    res.semd(err);
+    res.send(err);
   }
 };
 
