@@ -87,15 +87,15 @@ exports.get_que = (req, res) => {
     });
 };
 
-// exports.scan_qr = (req, res) => {
-//   order
-//     .findOne({ que: req.params.que })
-//     .populate("food_list")
-//     .exec((err, order) => {
-//       if (err) res.send(err);
-//       res.json(order);
-//     });
-// };
+exports.get_order = (req, res) => {
+  order
+    .findById(req.params.order_id)
+    .populate("food_list")
+    .exec((err, order) => {
+      if (err) res.send(err);
+      res.json(order);
+    });
+};
 
 exports.serve_order = async (req, res) => {
   const sending_order = await order.findById(req.params.order_id);
