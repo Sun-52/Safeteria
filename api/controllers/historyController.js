@@ -69,7 +69,9 @@ exports.gen_que = async (req, res) => {
   try {
     const random = Math.floor(Math.random() * 9000 + 1000);
     const user_order = await order.findById(req.params.order_id);
-    user_order.que = random;
+    const user_que = user_order.que;
+    user_que = random;
+    user_order.que = user_que;
     await user_order.save();
     res.json(user_order);
   } catch (err) {
