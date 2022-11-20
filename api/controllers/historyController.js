@@ -26,44 +26,44 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const storageRef = ref(storage, "some-child");
 
-exports.generate_qr = async (req, res) => {
-  const opts = {
-    errorCorrectionLevel: "H",
-    type: "terminal",
-    quality: 0.95,
-    margin: 1,
-    color: {
-      dark: "#000000",
-      light: "#FFF",
-    },
-  };
-  await ORCode.toFile("public/qr.png", req.params.order_id, opts)
-    .then((qrImage) => {
-      console.log("Qr created");
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-  var qr_image = await fs.readFileSync("public/qr.png");
-  console.log(qr_image);
-  var filename = "qr.png" + uuid.v1();
-  var imageRef = ref(storage, filename);
-  var metatype = { contentType: "image/png", name: filename };
-  await uploadBytes(imageRef, qr_image, metatype).then((snapshot) => {
-    console.log("image uploaded");
-  });
-  await getDownloadURL(ref(storage, filename)).then((url) => {
-    res.send(url);
-    order.findByIdAndUpdate(
-      req.params.order_id,
-      { $set: { status: "paid", qr_code: url } },
-      (err, order) => {
-        if (err) res.send(err);
-        console.log("order status updated");
-      }
-    );
-  });
-};
+// exports.generate_qr = async (req, res) => {
+//   const opts = {
+//     errorCorrectionLevel: "H",
+//     type: "terminal",
+//     quality: 0.95,
+//     margin: 1,
+//     color: {
+//       dark: "#000000",
+//       light: "#FFF",
+//     },
+//   };
+//   await ORCode.toFile("public/qr.png", req.params.order_id, opts)
+//     .then((qrImage) => {
+//       console.log("Qr created");
+//     })
+//     .catch((err) => {
+//       res.send(err);
+//     });
+//   var qr_image = await fs.readFileSync("public/qr.png");
+//   console.log(qr_image);
+//   var filename = "qr.png" + uuid.v1();
+//   var imageRef = ref(storage, filename);
+//   var metatype = { contentType: "image/png", name: filename };
+//   await uploadBytes(imageRef, qr_image, metatype).then((snapshot) => {
+//     console.log("image uploaded");
+//   });
+//   await getDownloadURL(ref(storage, filename)).then((url) => {
+//     res.send(url);
+//     order.findByIdAndUpdate(
+//       req.params.order_id,
+//       { $set: { status: "paid", qr_code: url } },
+//       (err, order) => {
+//         if (err) res.send(err);
+//         console.log("order status updated");
+//       }
+//     );
+//   });
+// };
 
 exports.gen_que = async (req, res) => {
   const random = Math.floor(Math.random() * 9000 + 1000);
@@ -79,16 +79,6 @@ exports.gen_que = async (req, res) => {
 
 exports.get_que = (req, res) => {
   order
-    .findById(req.params.order_id)
-    .populate("food_list")
-    .exec((err, order) => {
-      if (err) res.send(err);
-      res.json(order);
-    });
-};
-
-exports.scan_qr = (req, res) => {
-  order
     .findOne({ que: req.params.que })
     .populate("food_list")
     .exec((err, order) => {
@@ -96,6 +86,16 @@ exports.scan_qr = (req, res) => {
       res.json(order);
     });
 };
+
+// exports.scan_qr = (req, res) => {
+//   order
+//     .findOne({ que: req.params.que })
+//     .populate("food_list")
+//     .exec((err, order) => {
+//       if (err) res.send(err);
+//       res.json(order);
+//     });
+// };
 
 exports.serve_order = async (req, res) => {
   const sending_order = await order.findById(req.params.order_id);
