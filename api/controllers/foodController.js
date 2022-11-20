@@ -192,10 +192,10 @@ exports.decrease_foodamount_test = async (req, res) => {
       // user_food.splice(user_food.indexOf(req.params.food_id, 1));
       // user_foodamount.splice(user_food.indexOf(req.params.food_id, 1));
       user_food.filter(function (value, index, arr) {
-        return value !== req.params.food_id;
+        return value != req.params.food_id;
       });
       user_foodamount.filter(function (value, index, arr) {
-        return index !== user_food.indexOf(req.params.food_id);
+        return index != user_food.indexOf(req.params.food_id);
       });
       user_order.food_list = user_food;
       user_order.amount_of_food = user_foodamount;
