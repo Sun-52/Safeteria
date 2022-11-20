@@ -78,7 +78,7 @@ exports.gen_que = async (req, res) => {
 };
 
 exports.get_que = (req, res) => {
-  mongoose
+  order
     .findById(req.params.order_id)
     .populate("food_list")
     .exec((err, order) => {
