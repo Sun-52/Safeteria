@@ -22,6 +22,9 @@ const userSchema = new Schema({
     type: String,
     //student and shop
   },
+  money: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("user", userSchema);

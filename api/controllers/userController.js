@@ -1,5 +1,7 @@
+const { truncateSync } = require("fs");
 const mongoose = require("mongoose");
 const user = mongoose.model("user");
+const order = mongoose.model("order");
 
 // exports.sign_in = async (req, res) => {
 //   let userInfoResponse = await fetch(
@@ -61,4 +63,45 @@ exports.change_role = (req, res) => {
       res.json(user);
     }
   );
+};
+
+exports.increase_money = async (req, res) => {
+  const current_user = user.findById(req.params.user_id);
+  const before_money = current_user.money;
+  try {
+    before_money = before_money + req.query.amount;
+    await current_user.save();
+    truncateSync.json(current_user);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+exports.decrease_money = async (req, res) => {
+  const current_user = user.findById(req.params.user_id);
+  const before_money = current_user.money;
+  try {
+    before_money = before_money - req.query.amount;
+    await current_user.save();
+    truncateSync.json(current_user);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+exports.pay = async (req, res) => {
+  const random = Math.floor(Math.random() * 9000 + 1000);
+  const current_order = order.findById(req.params.order_id);
+  const current_user = user.findById(req.params.order_id);
+  const before_money = current_user.money;
+  const que = current_order.que;
+  try {
+    que = random;
+    await current_order.save();
+    before_money = before_money - req.query.amount;
+    await current_user.save();
+    res.json(current_order);
+  } catch (e) {
+    console.log(e);
+  }
 };

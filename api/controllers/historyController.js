@@ -65,18 +65,6 @@ const storageRef = ref(storage, "some-child");
 //   });
 // };
 
-exports.gen_que = async (req, res) => {
-  const random = Math.floor(Math.random() * 9000 + 1000);
-  order.findByIdAndUpdate(
-    req.params.order_id,
-    { que: random },
-    (err, order) => {
-      if (err) res.send(err);
-      res.json(order);
-    }
-  );
-};
-
 exports.get_que = (req, res) => {
   order
     .findOne({ que: req.params.que })
