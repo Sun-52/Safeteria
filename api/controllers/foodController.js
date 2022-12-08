@@ -126,7 +126,7 @@ exports.increase_foodamount_test = async (req, res) => {
     //   food_list: req.params.food_id,
     // });
     // newOrder.que = "";
-    newOrder.save((err, order) => {
+    await newOrder.save((err, order) => {
       if (err) res.send(err);
       console.log("order created");
     });
