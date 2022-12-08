@@ -37,16 +37,24 @@ const order = mongoose.model("order");
 //   });
 // };
 
-exports.sign_up = (req, res) => {
-  const newUser = new user(req.body);
-  newUser.save((err, user) => {
-    if (err) res.send(err);
-    res.json(user);
-  });
+exports.sign_up = async (req, res) => {
+  const exist = await user.exists({ email: req.body.email });
+  if (exist == null) {
+    const newUser = new user(req.body);
+    newUser.save((err, user) => {
+      if (err) res.send(err);
+      res.json(user);
+    });
+  } else {
+    user.findOne({ email: req.body.email }, (err, user) => {
+      if (err) res.send(err);
+      res.json(user);
+    });
+  }
 };
 
 exports.sign_in = (req, res) => {
-  user.findById(req.params.user_id, (err, user) => {
+  user.findOne(req.params.email, (err, user) => {
     if (err) res.send(err);
     res.json(user);
   });
