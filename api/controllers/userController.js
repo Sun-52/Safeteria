@@ -60,7 +60,12 @@ exports.sign_in = (req, res) => {
   });
 };
 
-exports.sync_truemoney = (req, res) => {};
+exports.get_user = (req, res) => {
+  user.findById(req.params.user_id, (err, user) => {
+    if (err) res.send(err);
+    res.json(user);
+  });
+};
 
 exports.change_role = (req, res) => {
   user.findByIdAndUpdate(
