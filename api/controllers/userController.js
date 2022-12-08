@@ -54,7 +54,7 @@ exports.sign_up = async (req, res) => {
 };
 
 exports.sign_in = (req, res) => {
-  user.findOne(req.params.email, (err, user) => {
+  user.findOne({ email: req.params.email }, (err, user) => {
     if (err) res.send(err);
     res.json(user);
   });
