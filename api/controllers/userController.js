@@ -108,6 +108,7 @@ exports.pay = async (req, res) => {
   const current_user = await user.findById(req.params.user_id);
   const before_money = current_user.money;
   console.log(before_money, "before money");
+  console.log(currrent_order, "current order");
   try {
     current_order.que = random;
     await current_order.save();
