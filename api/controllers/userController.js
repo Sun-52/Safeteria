@@ -84,7 +84,7 @@ exports.increase_money = async (req, res) => {
   try {
     before_money = before_money + req.query.amount;
     await current_user.save();
-    truncateSync.json(current_user);
+    res.json(current_user);
   } catch (e) {
     console.log(e);
   }
@@ -96,7 +96,7 @@ exports.decrease_money = async (req, res) => {
   try {
     before_money = before_money - req.query.amount;
     await current_user.save();
-    truncateSync.json(current_user);
+    res.json(current_user);
   } catch (e) {
     console.log(e);
   }
@@ -107,6 +107,7 @@ exports.pay = async (req, res) => {
   const current_order = order.findById(req.params.order_id);
   const current_user = user.findById(req.params.order_id);
   const before_money = current_user.money;
+  console.log(before_money, "before money");
   try {
     current_order.que = random;
     await current_order.save();
