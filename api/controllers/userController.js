@@ -105,7 +105,7 @@ exports.decrease_money = async (req, res) => {
 exports.pay = async (req, res) => {
   const random = Math.floor(Math.random() * 9000 + 1000);
   const current_order = order.findById(req.params.order_id);
-  const current_user = user.findById(req.params.order_id);
+  const current_user = user.findById(req.params.user_id);
   const before_money = current_user.money;
   console.log(before_money, "before money");
   try {
