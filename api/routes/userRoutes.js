@@ -9,5 +9,5 @@ module.exports = (app) => {
     .get(taskBuilder.get_user);
   app.route("/user/money/increase").patch(taskBuilder.increase_money);
   app.route("/user/money/decrease").patch(taskBuilder.decrease_money);
-  app.route("/user/pay/:user_id/:order:id").patch(taskBuilder.pay);
+  app.route("/user/pay/:user_id/:order_id").patch(taskBuilder.pay);
 };
