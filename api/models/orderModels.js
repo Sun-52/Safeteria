@@ -4,8 +4,9 @@ const { Schema } = mongoose;
 
 const orderSchema = new Schema({
   user_id: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
+    // type: Schema.Types.ObjectId,
+    // ref: "user",
+    type: String,
   },
   food_list: [
     {
