@@ -114,11 +114,17 @@ exports.increase_foodamount_test = async (req, res) => {
   };
   if (exist == null) {
     console.log("user don't have order");
-    const newOrder = new order();
-    newOrder.user_id = req.params.user_id;
-    newOrder.restaurant = await restaurant.findOne({
-      food_list: req.params.food_id,
+    const newOrder = new order({
+      user_id: req.params.user_id,
+      restaurant: await restaurant.findOne({
+        food_list: req.params.food_id,
+      }),
+      que: "",
     });
+    // newOrder.user_id = req.params.user_id;
+    // newOrder.restaurant = await restaurant.findOne({
+    //   food_list: req.params.food_id,
+    // });
     // newOrder.que = "";
     newOrder.save((err, order) => {
       if (err) res.send(err);
