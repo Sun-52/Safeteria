@@ -104,14 +104,18 @@ exports.decrease_money = async (req, res) => {
 
 exports.pay = async (req, res) => {
   const random = Math.floor(Math.random() * 9000 + 1000);
-  const current_order = await order.findById(req.params.order_id);
+  order.findByIdAndUpdate(
+    req.params.order_id,
+    { que: random },
+    (err, order) => {
+      if (err) res.send(err);
+      console.log("order status updated");
+    }
+  );
   const current_user = await user.findById(req.params.user_id);
   const before_money = current_user.money;
   console.log(before_money, "before money");
-  console.log(current_order, "current order");
   try {
-    current_order.que = random;
-    await current_order.save();
     current_user.money = before_money - req.query.amount;
     await current_user.save();
     res.json(current_order);
