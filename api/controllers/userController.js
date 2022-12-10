@@ -83,7 +83,7 @@ exports.increase_money = async (req, res) => {
   const before_money = current_user.money;
   user.findByIdAndUpdate(
     req.params.user_id,
-    { money: before_money + parseInt(req.query.amount) },
+    { money: before_money + req.query.amount },
     (err, user) => {
       if (err) res.send(err);
       res.json(user);
@@ -96,7 +96,7 @@ exports.decrease_money = async (req, res) => {
   const before_money = current_user.money;
   user.findByIdAndUpdate(
     req.params.user_id,
-    { money: before_money - parseInt(req.query.amount) },
+    { money: before_money - req.query.amount },
     (err, user) => {
       if (err) res.send(err);
       res.json(user);
