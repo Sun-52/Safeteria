@@ -81,25 +81,27 @@ exports.change_role = (req, res) => {
 exports.increase_money = async (req, res) => {
   const current_user = user.findById(req.params.user_id);
   const before_money = current_user.money;
-  try {
-    before_money = before_money + req.query.amount;
-    await current_user.save();
-    res.json(current_user);
-  } catch (e) {
-    console.log(e);
-  }
+  user.findByIdAndUpdate(
+    req.params.user_id,
+    { money: before_money + parseInt(req.query.amount) },
+    (err, user) => {
+      if (err) res.send(err);
+      res.json(user);
+    }
+  );
 };
 
 exports.decrease_money = async (req, res) => {
   const current_user = user.findById(req.params.user_id);
   const before_money = current_user.money;
-  try {
-    before_money = before_money - req.query.amount;
-    await current_user.save();
-    res.json(current_user);
-  } catch (e) {
-    console.log(e);
-  }
+  user.findByIdAndUpdate(
+    req.params.user_id,
+    { money: before_money - parseInt(req.query.amount) },
+    (err, user) => {
+      if (err) res.send(err);
+      res.json(user);
+    }
+  );
 };
 
 exports.pay = async (req, res) => {
