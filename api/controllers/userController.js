@@ -109,7 +109,7 @@ exports.pay = async (req, res) => {
     { que: random },
     (err, order) => {
       if (err) res.send(err);
-      console.log("order status updated");
+      res.json(order);
     }
   );
   const current_user = await user.findById(req.params.user_id);
@@ -118,7 +118,6 @@ exports.pay = async (req, res) => {
   try {
     current_user.money = before_money - req.query.amount;
     await current_user.save();
-    res.json(current_order);
   } catch (e) {
     console.log(e);
   }
