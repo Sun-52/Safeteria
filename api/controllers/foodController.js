@@ -120,6 +120,7 @@ exports.increase_foodamount_test = async (req, res) => {
         food_list: req.params.food_id,
       }),
       que: "",
+      status: undefined,
     });
     // newOrder.user_id = req.params.user_id;
     // newOrder.restaurant = await restaurant.findOne({
