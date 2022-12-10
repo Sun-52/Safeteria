@@ -103,7 +103,7 @@ exports.decrease_money = async (req, res) => {
 };
 
 exports.pay = async (req, res) => {
-  const random = Math.floor(Math.random() * 9000 + 1000);
+  const random = Math.floor(Math.random() * 9000 + 1000).toString();
   order.findByIdAndUpdate(
     req.params.order_id,
     { que: random },
