@@ -7,7 +7,7 @@ module.exports = (app) => {
     .route("/user/:user_id")
     .patch(taskBuilder.change_role)
     .get(taskBuilder.get_user);
-  app.route("/user/money/increase").patch(taskBuilder.increase_money);
-  app.route("/user/money/decrease").patch(taskBuilder.decrease_money);
+  app.route("/user/money/increase/:user_id").patch(taskBuilder.increase_money);
+  app.route("/user/money/decrease/:user_id").patch(taskBuilder.decrease_money);
   app.route("/user/pay/:user_id/:order_id").patch(taskBuilder.pay);
 };
