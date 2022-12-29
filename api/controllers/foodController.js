@@ -313,3 +313,7 @@ exports.get_amount_per_phase = async (req, res) => {
     }
   }
 };
+
+exports.test = (req, res) => {
+  console.log("test");
+};
