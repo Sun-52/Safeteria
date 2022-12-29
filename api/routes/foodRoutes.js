@@ -6,6 +6,7 @@ module.exports = (app) => {
     .route("/food/:user_id")
     .get(taskBuilder.get_user_order)
     .patch(taskBuilder.select_phase_test);
+  app.route("/food/phase").get(taskBuilder.get_amount_per_phase);
   app
     .route("/food/:user_id/:food_id")
     .post(taskBuilder.increase_foodamount_test)
