@@ -285,28 +285,18 @@ exports.get_amount_per_phase = async (req, res) => {
     "11:30-11:40",
     "11:40-11:50",
   ];
-  const set_response = {
-    "11:00-11:10": 0,
-    "11:10-11:20": 0,
-    "11:20-11:30": 0,
-    "11:30-11:40": 0,
-    "11:40-11:50": 0,
-  };
+  const set_response = [0, 0, 0, 0, 0];
   console.log("funtion activatd");
   for (let i = 0; i < phase.length; i++) {
     console.log("for loop", i);
-    const exist = await order.exists({
+    const exist = await order.find({
       $and: [
         { phase: phase[i] },
         { date: date.format(new Date(), "YYYY/MM/DD") },
       ],
     });
-    console.log(exist?.length, "exist length");
-    if (exist == null) {
-      set_response.current_phase = 0;
-    } else {
-      set_response.current_phase = exist.length;
-    }
+    console.log(exist, "exist length");
+    set_response[i] = exist.length;
     if (i == 4) {
       console.log("response activated");
       res.send(set_response);
